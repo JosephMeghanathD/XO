@@ -5,11 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <style>
-        button{
+        .button {
             background-color:gray;
-            width: 100px;
             text-align: center;
             color: black;
+            width: 100px;
+            font-size: 30px;
+            height: 100px;
+            position: relative;
+            border: none;
+            font-size: 28px;
+            padding: 20px;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            text-decoration: none;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .button:after {
+            content: "";
+            background: gray;
+            display: block;
+            position: absolute;
+            padding-top: 300%;
+            padding-left: 350%;
+            margin-left: -20px!important;
+            margin-top: -120%;
+            opacity: 0;
+            transition: all 0.8s
+        }
+
+        .button:active:after {
+            padding: 0;
+            margin: 0;
+            opacity: 1;
+            transition: 0s
+        }
+        button{
+            background-color:gray;
+            text-align: center;
+            color: black;
+            width: 100px;
             font-size: 30px;
             height: 100px;
         }
@@ -25,7 +62,7 @@
         var GameDone=0;
         var t=10;
         var inf;
-var count=0;
+        var count=0;
         function timer(){
             var pd=document.getElementById("PD");
             pd.style.display="table";
@@ -127,6 +164,9 @@ var count=0;
             }
         }
         function backTrack(){
+	    if(GameDone==1){
+	        return;
+	    }
             if(GHI==0){
                 alert("Not Possible Move!");
                 return;
@@ -190,7 +230,9 @@ var count=0;
             }
         }
         function playMove(id,i,j){
-	    count=count+1;
+            if(GameDone==1){
+                return;
+            }
             if(GameArray[i][j]==0){
                 GameArray[i][j]=player;
                 GameHistory[GHI][0]=i;
@@ -205,23 +247,26 @@ var count=0;
                     checkGame();
                     player='O';
                     if(GameDone!=1){
-                    inf.innerHTML="Player O";
+                        inf.innerHTML="Player O";
 		    }
                 }
                 else{
                     checkGame();
                     player='X';
                     if(GameDone!=1){
-                    inf.innerHTML="Player X";
+                        inf.innerHTML="Player X";
                     }
                     
                 }
-		if(count>=9){
-		    inf=document.getElementById("info");
-		    inf.innerHTML="Its A Draw";
-		    var d=setInterval(timer,1000);
-		    return;
-	        }
+		count=count+1;
+		if(GameDone!=1){
+		    if(count>=9){
+		        inf=document.getElementById("info");
+		        inf.innerHTML="Its A Draw";
+		        var d=setInterval(timer,1000);
+		        return;
+	            }
+		}
             }
             else{
                 alert("Not Possible Move!");
@@ -236,23 +281,23 @@ var count=0;
         <h1 id="info">Player X</h1>
         <table>
             <tr>
-                <td><button id="1" onclick="playMove(1,0,0)"></button></td>
-                <td><button id="2" onclick="playMove(2,0,1)"></button></td>
-                <td><button id="3" onclick="playMove(3,0,2)"></button></td>
+                <td><button class="button" id="1" onclick="playMove(1,0,0)"></button></td>
+                <td><button class="button" id="2" onclick="playMove(2,0,1)"></button></td>
+                <td><button class="button" id="3" onclick="playMove(3,0,2)"></button></td>
             </tr>
             <tr>
-                <td><button id="4" onclick="playMove(4,1,0)"></button></td>
-                <td><button id="5" onclick="playMove(5,1,1)"></button></td>
-                <td><button id="6" onclick="playMove(6,1,2)"></button></td>
+                <td><button class="button" id="4" onclick="playMove(4,1,0)"></button></td>
+                <td><button class="button" id="5" onclick="playMove(5,1,1)"></button></td>
+                <td><button class="button" id="6" onclick="playMove(6,1,2)"></button></td>
             </tr>
             <tr>
-                <td><button id="7" onclick="playMove(7,2,0)"></button></td>
-                <td><button id="8" onclick="playMove(8,2,1)"></button></td>
-                <td><button id="9" onclick="playMove(9,2,2)"></button></td>
+                <td><button class="button" id="7" onclick="playMove(7,2,0)"></button></td>
+                <td><button class="button" id="8" onclick="playMove(8,2,1)"></button></td>
+                <td><button class="button" id="9" onclick="playMove(9,2,2)"></button></td>
             </tr>
             <tr>
                 <td></td>
-                <td><button onclick="backTrack()">Back</button></td>
+                <td><button class="button" onclick="backTrack()">Back</button></td>
                 <td></td>
                 
             </tr>
