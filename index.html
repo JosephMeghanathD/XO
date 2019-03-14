@@ -4,56 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
-    <style>
-        .button {
-            background-color:gray;
-            text-align: center;
-            color: black;
-            width: 100px;
-            font-size: 30px;
-            height: 100px;
-            position: relative;
-            border: none;
-            font-size: 28px;
-            padding: 20px;
-            -webkit-transition-duration: 0.4s; /* Safari */
-            transition-duration: 0.4s;
-            text-decoration: none;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .button:after {
-            content: "";
-            background: gray;
-            display: block;
-            position: absolute;
-            padding-top: 300%;
-            padding-left: 350%;
-            margin-left: -20px!important;
-            margin-top: -120%;
-            opacity: 0;
-            transition: all 0.8s
-        }
-
-        .button:active:after {
-            padding: 0;
-            margin: 0;
-            opacity: 1;
-            transition: 0s
-        }
-        button{
-            background-color:gray;
-            text-align: center;
-            color: black;
-            width: 100px;
-            font-size: 30px;
-            height: 100px;
-        }
-        progress{
-            size: 50px;
-        }
-    </style>
+    <link rel="stylesheet" href="xo_style.css">
     <script>
         var player='X';
         var GameHistory=[[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1],[-1,-1]];
@@ -83,6 +34,8 @@
             inf=document.getElementById("info");
             inf.innerHTML="Player "+player+" Win's";
             console.log("WINNER IS:",player, "From:",i);
+            back_button=document.getElementById("back_btn");
+            back_button.parentNode.removeChild(back_button);
             var d=setInterval(timer,1000);
         }
         function gv(i,j){
@@ -241,14 +194,16 @@
                 var btn=document.getElementById(id);
                 inf=document.getElementById("info");
                 btn.innerHTML=player;
-                btn.style.backgroundColor="#000000";
-                btn.style.color="#FFFFFF";
+                var span_ex = document.createElement("span");
+                btn.classList.toggle("clicked_button");
+                btn.appendChild(span_ex);
+                console.log(btn.classList, btn.className);
                 if(player=='X'){
                     checkGame();
                     player='O';
                     if(GameDone!=1){
                         inf.innerHTML="Player O";
-		    }
+		            }
                 }
                 else{
                     checkGame();
@@ -258,15 +213,17 @@
                     }
                     
                 }
-		count=count+1;
-		if(GameDone!=1){
-		    if(count>=9){
-		        inf=document.getElementById("info");
-		        inf.innerHTML="Its A Draw";
-		        var d=setInterval(timer,1000);
-		        return;
-	            }
-		}
+                document.documentElement.style.setProperty(`--next_play`, `'${player}'`);
+		        console.log(document.documentElement.style.getPropertyValue(`--next_play`))
+                count=count+1;
+                if(GameDone!=1){
+                    if(count>=9){
+                        inf=document.getElementById("info");
+                        inf.innerHTML="Its A Draw";
+                        var d=setInterval(timer,1000);
+                        return;
+                        }
+                }
             }
             else{
                 alert("Not Possible Move!");
@@ -281,23 +238,23 @@
         <h1 id="info">Player X</h1>
         <table>
             <tr>
-                <td><button class="button" id="1" onclick="playMove(1,0,0)"></button></td>
-                <td><button class="button" id="2" onclick="playMove(2,0,1)"></button></td>
-                <td><button class="button" id="3" onclick="playMove(3,0,2)"></button></td>
+                <td><button class="button" id="1" onclick="playMove(1,0,0)"><span></span></button></td>
+                <td><button class="button" id="2" onclick="playMove(2,0,1)"><span></span></button></td>
+                <td><button class="button" id="3" onclick="playMove(3,0,2)"><span></span></button></td>
             </tr>
             <tr>
-                <td><button class="button" id="4" onclick="playMove(4,1,0)"></button></td>
-                <td><button class="button" id="5" onclick="playMove(5,1,1)"></button></td>
-                <td><button class="button" id="6" onclick="playMove(6,1,2)"></button></td>
+                <td><button class="button" id="4" onclick="playMove(4,1,0)"><span></span></button></td>
+                <td><button class="button" id="5" onclick="playMove(5,1,1)"><span></span></button></td>
+                <td><button class="button" id="6" onclick="playMove(6,1,2)"><span></span></button></td>
             </tr>
             <tr>
-                <td><button class="button" id="7" onclick="playMove(7,2,0)"></button></td>
-                <td><button class="button" id="8" onclick="playMove(8,2,1)"></button></td>
-                <td><button class="button" id="9" onclick="playMove(9,2,2)"></button></td>
+                <td><button class="button" id="7" onclick="playMove(7,2,0)"><span></span></button></td>
+                <td><button class="button" id="8" onclick="playMove(8,2,1)"><span></span></button></td>
+                <td><button class="button" id="9" onclick="playMove(9,2,2)"><span></span></button></td>
             </tr>
             <tr>
                 <td></td>
-                <td><button class="button" onclick="backTrack()">Back</button></td>
+                <td><button class="button" id="back_btn" onclick="backTrack()">Back</button></td>
                 <td></td>
                 
             </tr>
