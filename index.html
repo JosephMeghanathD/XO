@@ -234,6 +234,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+    <canvas></canvas>
     <center>
         <h1 id="info">Player X</h1>
         <table>
@@ -261,5 +262,10 @@
         </table>
         <progress style="display: none;" value="0" max=10 id="PD"></progress>
     </center>
+    <script rel="text/javascript" src="background/rymd.js">
+        generate();
+        resize();
+        step(); 
+    </script>
 </body>
 </html>
